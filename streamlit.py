@@ -199,6 +199,35 @@ def generate_field_map(size):
     return np.random.rand(size, size)
 
 field_data = generate_field_map(field_size)
+
+advice_dict = {
+    "Disease Spread": {
+        "Low": "No immediate action needed. Monitor for any signs of disease.",
+        "Moderate": "Consider applying preventative fungicides or rotating crops.",
+        "High": "Immediate intervention required! Apply treatment and isolate affected areas."
+    },
+    "Soil Moisture": {
+        "Low": "Increase irrigation and check for drainage issues.",
+        "Moderate": "Monitor soil conditions; adjust irrigation as needed.",
+        "High": "Reduce watering to prevent root rot and soil erosion."
+    },
+    "Yield Potential": {
+        "Low": "Optimize fertilization and assess pest/disease risk.",
+        "Moderate": "Crop growth is stable, but minor improvements are possible.",
+        "High": "Excellent yield potential! Maintain current practices."
+    }
+}
+
+# Determine warning level based on field data
+avg_risk = np.mean(field_data)
+if avg_risk < 0.3:
+    warning_level = "Low"
+elif avg_risk < 0.7:
+    warning_level = "Moderate"
+else:
+    warning_level = "High"
+
+
 fig = px.imshow(field_data,
                 color_continuous_scale='RdYlGn_r', # Red-Yellow-Green reversed for health
                 title=f"Field Health Map - {map_type}",
@@ -208,6 +237,7 @@ st.plotly_chart(fig)
 
 # Prediction History
 st.subheader("Detection History")
+st.info(f"**Severity Level:** {warning_level}\n\n{advice_dict[map_type][warning_level]}")
 if st.session_state.history:
     for i, entry in enumerate(reversed(st.session_state.history)):
         cols = st.columns([1, 4])
