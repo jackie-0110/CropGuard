@@ -202,7 +202,7 @@ field_data = generate_field_map(field_size)
 fig = px.imshow(field_data,
                 color_continuous_scale='RdYlGn_r', # Red-Yellow-Green reversed for health
                 title=f"Field Health Map - {map_type}",
-                labels=dict(x="Field Width", y="Field Length", color="Health Index")) # clearer labels
+                labels=dict(x="Field Width", y="Field Length", color=f"{map_type} Index")) # clearer labels
 st.plotly_chart(fig)
 
 
