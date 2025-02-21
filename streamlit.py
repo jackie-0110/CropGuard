@@ -194,11 +194,11 @@ field_size = st.sidebar.slider("Field Size (acres)", 1, 50, 10)
 map_type = st.sidebar.selectbox("Map Type", ["Disease Spread", "Soil Moisture", "Yield Potential"])
 
 # Mock Field Data
-def generate_field_map():
+def generate_field_map(size):
     np.random.seed(42) 
-    return np.random.rand(10, 10)
+    return np.random.rand(size, size)
 
-field_data = generate_field_map()
+field_data = generate_field_map(field_size)
 fig = px.imshow(field_data,
                 color_continuous_scale='RdYlGn_r', # Red-Yellow-Green reversed for health
                 title=f"Field Health Map - {map_type}",
@@ -221,9 +221,9 @@ else:
 st.sidebar.subheader("Weather Advisory")
 #Not able to use API currently.
 weather = {
-    "temp": 25.6,
-    "humidity": 65,
-    "conditions": "Partly Cloudy"
+    "temp": 9,
+    "humidity": 55,
+    "conditions": "Sunny"
 }
 
 st.sidebar.metric("Temperature", f"{weather['temp']}°C")
